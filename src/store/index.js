@@ -33,6 +33,7 @@ export default new Vuex.Store({
     pageSize: 4,
     currentCategory: "all",
     subscriptions: [],
+    subscribedProducts: [],
   },
   getters: {
     pageById: (state) => (id) => state.pages.find((p) => p._id == id),
@@ -60,6 +61,9 @@ export default new Vuex.Store({
     setSubscriptions(state, subscriptions) {
       state.subscriptions = subscriptions;
     },
+    setSubscribedProducts(state, subscribedProducts) {
+      state.subscribedProducts = subscribedProducts;
+    },
   },
   actions: {
     async setPagesAction(context) {
@@ -70,6 +74,10 @@ export default new Vuex.Store({
     },
     async setSubscriptionsAction(context) {
       context.commit("setSubscriptions", (await Axios.get(subscriptionsUrl)).data);
+    },
+    async setSubscribedProductsAction(context) {
+      let url = `${productsUrl}/subscribed`;
+      context.commit("setSubscribedProducts", (await Axios.get(url)).data);
     },
     async setProductsByCategoryAction(context, category) {
       let url;

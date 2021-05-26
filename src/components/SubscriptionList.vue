@@ -2,7 +2,7 @@
   <div class="row">
     <CategoryList />
     <div class="col-9">
-      <h3>You have {{ subscriptions.length }} Subcriptions</h3>
+      <h3>You have {{ subscribedProducts.length }} Subcriptions</h3>
       <table class="table">
         <thead>
           <tr>
@@ -14,7 +14,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(p, i) in products" :key="i">
+          <tr v-for="(p, i) in subscribedProducts" :key="i">
             <td class="align-middle">{{ p.name }}</td>
             <td class="align-middle">
               <img :src="productImages + p.image" width="100" />
@@ -38,14 +38,19 @@ import { mapState, mapActions } from "vuex";
 export default {
   components: { CategoryList },
   computed: {
-    ...mapState(["subscriptions", "products", "productImages"])
-    
+    ...mapState([
+      "subscriptions",
+      "products",
+      "productImages",
+      "subscribedProducts"
+    ])
   },
   methods: {
-    ...mapActions(["setSubscriptionsAction"])
+    ...mapActions(["setSubscriptionsAction", "setSubscribedProductsAction"])
   },
   created() {
     this.setSubscriptionsAction();
+    this.setSubscribedProductsAction();
   }
 };
 </script>
