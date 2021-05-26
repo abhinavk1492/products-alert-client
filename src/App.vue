@@ -1,28 +1,27 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <Header />
+
+    <router-view />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import { mapActions } from "vuex";
+import Header from "./components/Header";
 
 export default {
-  name: 'App',
   components: {
-    HelloWorld
+    Header
+  },
+  methods: {
+    ...mapActions(["setPagesAction", "setCategoriesAction"]),
+    ...mapActions({ initializeCart: "cart/initializeCart" }),
+  },
+  async created() {
+    this.setPagesAction();
+    this.setCategoriesAction();
+    this.initializeCart(this.$store);
   }
-}
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
