@@ -14,6 +14,9 @@
       <li class="nav-item">
         <router-link class="nav-link" to="/subscriptions">My Subscriptions</router-link>
       </li>
+      <li class="nav-item">
+        <router-link class="nav-link" to="/notifications">Notifications({{ notifications.length }})</router-link>
+      </li>
     </ul>
   </div>
 </template>
@@ -23,7 +26,7 @@ import { mapState } from "vuex";
 
 export default {
   computed: {
-    ...mapState(["categories"])
+    ...mapState(["categories", "notifications"])
   }
 };
 </script>

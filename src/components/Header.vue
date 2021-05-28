@@ -28,20 +28,39 @@
         </ul>
       </div>
     </div>
+    <div>
+      <notification-bell
+        style="margin: 10px"
+        iconColor="#fff0f0"
+        v-model="notifications"
+        :count="notifications.length"
+      />
+    </div>
     <CartSummary />
     <Logout />
   </nav>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import CartSummary from "./CartSummary";
 import Logout from "./Logout";
+import NotificationBell from "vue-notification-bell";
+// import Notifications from "./Notifications";
 
 export default {
-  components: { CartSummary, Logout },
+  components: { CartSummary, Logout, NotificationBell },
   computed: {
-    ...mapState(["pages"])
+    ...mapState(["pages", "notifications"])
+  },
+  methods: {
+    ...mapActions(["setNotificationsAction"])
+  },
+  created() {
+    this.setNotificationsAction();
+  },
+  updated() {
+    this.setNotificationsAction();
   }
 };
 </script>

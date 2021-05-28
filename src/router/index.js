@@ -11,6 +11,7 @@ import PageEditor from "../components/admin/PageEditor";
 import ProductEditor from "../components/admin/ProductEditor";
 import Login from "../components/admin/Login";
 import SubscriptionList from "../components/SubscriptionList";
+import Notifications from "../components/Notifications";
 
 import dataStore from "../store";
 
@@ -42,6 +43,7 @@ export default new VueRouter({
     { path: "/categories/:category", component: ProductList },
     { path: "/login", component: Login },
     { path: "/subscriptions", component: SubscriptionList },
+    { path: "/notifications", component: Notifications },
     { path: "/cart", component: ShoppingCart },
     { path: "/:slug?", component: Pages },
     { path: "*", redirect: "/" },

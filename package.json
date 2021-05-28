@@ -13,6 +13,7 @@
     "core-js": "^3.6.5",
     "font-awesome": "^4.7.0",
     "vue": "^2.6.11",
+    "vue-notification-bell": "^0.8.14",
     "vue-router": "^3.5.1",
     "vuelidate": "^0.7.6",
     "vuex": "^3.6.2"

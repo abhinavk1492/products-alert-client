@@ -11,6 +11,7 @@ Vue.use(Vuex);
 
 const baseUrl = "http://localhost:3000";
 const pagesUrl = `${baseUrl}/pages`;
+const notificationsUrl = `${baseUrl}/notifications`;
 const categoriesUrl = `${baseUrl}/categories`;
 const productsUrl = `${baseUrl}/products`;
 const subscriptionsUrl = `${baseUrl}/subscriptions`;
@@ -34,6 +35,7 @@ export default new Vuex.Store({
     currentCategory: "all",
     subscriptions: [],
     subscribedProducts: [],
+    notifications: [],
   },
   getters: {
     pageById: (state) => (id) => state.pages.find((p) => p._id == id),
@@ -64,16 +66,26 @@ export default new Vuex.Store({
     setSubscribedProducts(state, subscribedProducts) {
       state.subscribedProducts = subscribedProducts;
     },
+    setNotifications(state, notifications) {
+      state.notifications = notifications;
+    },
+
   },
   actions: {
     async setPagesAction(context) {
       context.commit("setPages", (await Axios.get(pagesUrl)).data);
     },
+    async setNotificationsAction(context) {
+      context.commit("setNotifications", (await Axios.get(notificationsUrl)).data);
+    },
     async setCategoriesAction(context) {
       context.commit("setCategories", (await Axios.get(categoriesUrl)).data);
     },
     async setSubscriptionsAction(context) {
-      context.commit("setSubscriptions", (await Axios.get(subscriptionsUrl)).data);
+      context.commit(
+        "setSubscriptions",
+        (await Axios.get(subscriptionsUrl)).data
+      );
     },
     async setSubscribedProductsAction(context) {
       let url = `${productsUrl}/subscribed`;
@@ -127,6 +139,7 @@ export default new Vuex.Store({
     },
     async editProduct(context, product) {
       await Axios.put(productsUrl, product);
+      context.commit("setNotifications", (await Axios.get(notificationsUrl)).data);
     },
     async deleteProduct(context, product) {
       await Axios.delete(`${productsUrl}/${product._id}`);
@@ -142,6 +155,25 @@ export default new Vuex.Store({
         price: product.price,
       };
       await Axios.post(subscriptionsUrl, subscription);
+    },
+    async removeSubscription(context, product) {
+      // let subscripionId = this.state.subscriptions.find(
+      //   (s) => s.productid == product.id
+      // );
+      await Axios.delete(`${subscriptionsUrl}/${product._id}`);
+      context.commit(
+        "setSubscriptions",
+        (await Axios.get(subscriptionsUrl)).data
+      );
+      let url = `${productsUrl}/subscribed`;
+      context.commit("setSubscribedProducts", (await Axios.get(url)).data);
+    },
+    async closeNotification(context, notification) {
+      await Axios.put(`${notificationsUrl}/${notification._id}`);
+      context.commit(
+        "setNotifications",
+        (await Axios.get(notificationsUrl)).data
+      );
     },
   },
 });

@@ -22,7 +22,7 @@
             <td class="align-middle">{{ p.price | currency }}</td>
             <td class="align-middle">{{ p.category }}</td>
             <td class="align-middle">
-              <button class="btn btn-sm btn-danger mx-2" @click="deleteProduct(p)">Remove</button>
+              <button class="btn btn-sm btn-danger mx-2" @click="removeSubscription(p)">Remove</button>
             </td>
           </tr>
         </tbody>
@@ -46,11 +46,15 @@ export default {
     ])
   },
   methods: {
-    ...mapActions(["setSubscriptionsAction", "setSubscribedProductsAction"])
+    ...mapActions([
+      "setSubscriptionsAction",
+      "setSubscribedProductsAction",
+      "removeSubscription"
+    ])
   },
   created() {
     this.setSubscriptionsAction();
     this.setSubscribedProductsAction();
-  }
+  },
 };
 </script>
